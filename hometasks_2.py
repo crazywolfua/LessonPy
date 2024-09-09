@@ -38,7 +38,7 @@ def print_even_numbers(number):
     for i in range(0, number+1, 2):
         if i != 0:
             result += f"{i} "
-    return result
+    print(f"Четные числа в указанном диапазоне: {result}")
 
 def print_even_numbers_1(number):
     result = ""
@@ -49,7 +49,6 @@ def print_even_numbers_1(number):
     return result
 
 print_even = int(input("Введите конец диапазона чисел: "))
-print(f"Четные числа в указанном диапазоне: {print_even_numbers(print_even)}")
 print(f"Четные числа в указанном диапазоне: {print_even_numbers_1(print_even)}")
 
 '''
