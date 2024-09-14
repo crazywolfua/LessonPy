@@ -12,3 +12,4 @@ find_text(path_file, search_text )
 sort_data_in_file(file_path). Резульаттом має бути новий файл з наступною назвою {file_path}_sorted Новий рядок тексту
 
 Новий рядок тексту
+Новий рядок тексту
