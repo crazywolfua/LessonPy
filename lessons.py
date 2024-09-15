@@ -14,24 +14,33 @@
 # count_sum(count, param)
 
 
-def validate_password(passw):
+# def validate_password(passw):
+#
+#     if len(passw) <= 5 :
+#         return False
+#
+#     def count_upper_case(passw):
+#         count_upper = sum(1 for char in passw if char.isupper())
+#         if count_upper < 2:
+#             return False
+#
+#     def digits_exists(passw):
+#         count_digits = sum(1 for char in passw if char.isdigit())
+#         if count_digits == 0:
+#             return False
+#
+#     if count_upper_case(passw) is False or digits_exists(passw) is False:
+#         return False
+#     return True
+#
+#
+# print(validate_password(input("Введите пароль: ")))
 
-    if len(passw) <= 5 :
-        return False
+def copy_to_file(from_file, to_file):
+    with open(from_file, 'r') as f:
+        contents = f.read()
+    with open(to_file, 'w') as t:
+        t.write(contents)
 
-    def count_upper_case(passw):
-        count_upper = sum(1 for char in passw if char.isupper())
-        if count_upper < 2:
-            return False
+copy_to_file('from.txt', 'to.txt')
 
-    def digits_exists(passw):
-        count_digits = sum(1 for char in passw if char.isdigit())
-        if count_digits == 0:
-            return False
-
-    if count_upper_case(passw) is False or digits_exists(passw) is False:
-        return False
-    return True
-
-
-print(validate_password(input("Введите пароль: ")))
