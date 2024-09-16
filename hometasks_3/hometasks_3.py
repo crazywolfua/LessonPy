@@ -839,10 +839,194 @@ def delete_old_files(directory):
 directory = '../hometasks_3'
 delete_old_files(directory)
 
-# '''
-#     Task 26
-#     Напишіть функцію для розділу списку на два підсписки, використовуючи певний елемент як роздільник.
-#     Врахуйте можливі помилки, такі як відсутність роздільника чи невірний тип даних у списку.
-# '''
-# print("____________________")
-# print("Task 26")
+'''
+    Task 26
+    Напишіть функцію для розділу списку на два підсписки, використовуючи певний елемент як роздільник.
+    Врахуйте можливі помилки, такі як відсутність роздільника чи невірний тип даних у списку.
+'''
+print("____________________")
+print("Task 26")
+
+def split_list_by_element(lst, delimiter):
+    try:
+        if not isinstance(lst, list):
+            raise TypeError("Перший аргумент має бути списком.")
+
+        if delimiter not in lst:
+            raise ValueError(f"Роздільник '{delimiter}' не знайдено у списку.")
+
+        delimiter_index = lst.index(delimiter)
+
+        left_sublist = lst[:delimiter_index]
+        right_sublist = lst[delimiter_index + 1:]
+
+        return left_sublist, right_sublist
+
+    except TypeError as te:
+        print(f"Помилка типу: {te}")
+    except ValueError as ve:
+        print(f"Помилка значення: {ve}")
+    except Exception as e:
+        print(f"Виникла непередбачена помилка: {e}")
+        raise
+
+lst = [1, 2, 3, "роздільник", 4, 5, 6]
+delimiter = "роздільник"
+
+result = split_list_by_element(lst, delimiter)
+
+if result:
+    left, right = result
+    print("Ліва частина:", left)
+    print("Права частина:", right)
+
+'''
+    Task 27
+    Розробіть функцію для обчислення податку на прибуток за різними ставками.
+    Використовуйте try-except, щоб обробити можливі помилки введення користувача або некоректні дані.
+'''
+print("____________________")
+print("Task 27")
+
+def calculate_income_tax(income, tax_rate):
+    try:
+        if not isinstance(income, (int, float)):
+            raise TypeError("Прибуток повинен бути числом.")
+
+        if not isinstance(tax_rate, (int, float)):
+            raise TypeError("Ставка податку повинна бути числом.")
+
+        if income < 0:
+            raise ValueError("Прибуток не може бути від'ємним.")
+
+        if tax_rate < 0:
+            raise ValueError("Ставка податку не може бути від'ємною.")
+
+        tax_amount = income * (tax_rate / 100)
+        return tax_amount
+
+    except TypeError as te:
+        print(f"Помилка типу даних: {te}")
+    except ValueError as ve:
+        print(f"Помилка значення: {ve}")
+    except Exception as e:
+        print(f"Виникла непередбачена помилка: {e}")
+        raise
+
+try:
+    income_input = input("Введіть ваш прибуток: ")
+    tax_rate_input = input("Введіть ставку податку (%): ")
+
+    income = float(income_input)
+    tax_rate = float(tax_rate_input)
+
+    tax = calculate_income_tax(income, tax_rate)
+
+    if tax is not None:
+        print(f"Сума податку: {tax:.2f}")
+
+except ValueError:
+    print("Введені дані не є числом. Будь ласка, спробуйте ще раз.")
+except Exception as e:
+    print(f"Виникла непередбачена помилка: {e}")
+
+'''
+    Task 28
+    Створіть програму для валідації електронної адреси користувача.
+    Використовуйте try-except, щоб обробити помилки формату або відсутності необхідних компонентів (наприклад, "@").
+'''
+print("____________________")
+print("Task 28")
+
+import re
+
+def validate_email(email):
+    try:
+        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+        if not isinstance(email, str):
+            raise TypeError("Електронна адреса повинна бути рядком.")
+
+        if not re.match(email_regex, email):
+            raise ValueError("Електронна адреса має неправильний формат.")
+
+        return True
+
+    except TypeError as te:
+        print(f"Помилка типу: {te}")
+    except ValueError as ve:
+        print(f"Помилка значення: {ve}")
+    except Exception as e:
+        print(f"Виникла непередбачена помилка: {e}")
+        raise
+try:
+    email_input = input("Введіть електронну адресу: ")
+    if validate_email(email_input):
+        print("Електронна адреса є дійсною.")
+    else:
+        print("Електронна адреса є недійсною.")
+
+except Exception as e:
+    print(f"Виникла непередбачена помилка: {e}")
+
+'''
+    Task 29
+    Напишіть код, який зчитує вміст HTML-файлу та виводить список всіх URL-адрес у файлі.
+'''
+print("____________________")
+print("Task 29")
+
+import re
+
+def extract_urls_from_html_1(file_path):
+    try:
+        url_regex = r'href=["\'](.*?)["\']'
+
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+
+        urls = re.findall(url_regex, content)
+
+        return urls
+
+    except FileNotFoundError:
+        print(f"Файл '{file_path}' не знайдено.")
+    except Exception as e:
+        print(f"Виникла помилка: {e}")
+        raise
+
+file_path = 'example.html'
+urls = extract_urls_from_html_1(file_path)
+
+if urls:
+    print("Знайдені URL-адреси:")
+    for url in urls:
+        print(url)
+else:
+    print("URL-адрес не знайдено або файл порожній.")
+
+print("Task 29.1")
+from bs4 import BeautifulSoup
+
+def extract_urls_from_html(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+
+        soup = BeautifulSoup(content, 'html.parser')
+        urls = [a['href'] for a in soup.find_all('a', href=True)]
+
+        return urls
+    except Exception as e:
+        print(f"Виникла помилка: {e}")
+        raise
+
+file_path = 'example.html'
+urls = extract_urls_from_html(file_path)
+
+if urls:
+    print("Знайдені URL-адреси:")
+    for url in urls:
+        print(url)
+else:
+    print("URL-адрес не знайдено або файл порожній.")
